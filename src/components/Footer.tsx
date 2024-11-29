@@ -70,7 +70,11 @@ export const Footer: React.FC = () => {
                 </div>
               ))}
               {d.title !== "Available On" ? (
-                <div className="flex gap-2">{d.icon}</div>
+                <ul className="flex gap-2">
+                  {d.icon.map((icon, i) => (
+                    <li key={i}>{icon}</li>
+                  ))}
+                </ul>
               ) : null}
             </div>
           </div>

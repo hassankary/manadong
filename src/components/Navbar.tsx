@@ -17,7 +17,7 @@ export const Navbar: React.FC = () => {
   const [active, setActive] = useState<number>(0);
 
   return (
-    <div className="sticky top-0 h-[60px] flex justify-center items-center font-sans font-semibold text-white text-sm bg-blue-manadong">
+    <div className="z-30 sticky top-0 h-[60px] flex justify-center items-center font-sans font-semibold text-white text-sm bg-blue-manadong">
       <div className=" container h-full xl:max-w-7xl flex items-center justify-between mx-[18px]">
         <div>
           <img
