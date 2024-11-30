@@ -5,7 +5,7 @@ This is a React project created for the Junior Frontend Engineer test at C Compa
 ## Installation 
 Clone the Repository:
 ```bash
-git clone https://github.com/hassankary/manadong
+git clone https://github.com/hassankary/manadong.git
 cd manadong
 ```
 
