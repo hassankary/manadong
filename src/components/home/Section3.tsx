@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useRef, useState } from "react";
+
 interface Promo {
   id: string;
   image: string;
@@ -29,16 +32,53 @@ const promo: Promo[] = [
 ];
 
 export const Section3: React.FC = () => {
+  const [isItemVisible, setIsItemVisible] = useState<boolean>(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isItemVisible) {
+          setIsItemVisible(true);
+        }
+      },
+      { threshold: 0 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
   return (
     <div className="w-full flex justify-center py-20 bg-[#FDD8CD]">
       <div className="container xl:max-w-7xl mx-5 flex flex-col lg:flex-row gap-10">
-        <div className="lg:w-[30%] flex flex-col justify-center">
+        <div
+          className={`${
+            isItemVisible
+              ? "animate-fade-right animate-duration-700 animate-delay-100 ease-in-out"
+              : "opacity-0"
+          } lg:w-[30%] flex flex-col justify-center`}
+        >
           <h1 className="font-bold text-3xl sm:text-4xl text-blue-manadong">
             Promotion
           </h1>
           <div className="w-[65px] h-1 mt-2 bg-red-manadong" />
         </div>
-        <div className="lg:w-[70%] grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <div
+          ref={ref}
+          className={`${
+            isItemVisible
+              ? "animate-fade-up animate-duration-700 animate-delay-100 ease-in-out"
+              : "opacity-0"
+          } lg:w-[70%] grid grid-cols-2 sm:grid-cols-3 gap-4`}
+        >
           {promo.map((d) => (
             <div
               key={d.id}

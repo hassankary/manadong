@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { GrLocation } from "react-icons/gr";
 import { BsCursor } from "react-icons/bs";
+import { useEffect, useRef, useState } from "react";
 
 interface Locations {
   id: string;
@@ -54,20 +56,60 @@ const locations: Locations[] = [
 ];
 
 export const Section5: React.FC = () => {
+  const [isItemVisible, setIsItemVisible] = useState<boolean>(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isItemVisible) {
+          setIsItemVisible(true);
+        }
+      },
+      { threshold: 0 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
   return (
     <div className="w-full flex justify-center py-20 ">
       <div className="container xl:max-w-7xl mx-5 space-y-10">
-        <div>
+        <div
+          className={`${
+            isItemVisible
+              ? "animate-fade-right animate-duration-700 animate-delay-100 ease-in-out"
+              : "opacity-0"
+          }`}
+        >
           <h1 className="font-bold text-3xl sm:text-4xl text-blue-manadong">
             Locations
           </h1>
           <div className="w-[65px] h-1 mt-2 bg-red-manadong" />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {locations.map((d) => (
+        <div
+          ref={ref}
+          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4`}
+        >
+          {locations.map((d, i) => (
             <div
               key={d.id}
-              className="flex gap-4 p-4 border rounded-lg shadow-lg"
+              style={{
+                animationDelay: `${(i + 1) * 100}ms`,
+              }}
+              className={`${
+                isItemVisible
+                  ? "animate-fade-up animate-duration-700 ease-in-out"
+                  : "opacity-0"
+              } flex gap-4 p-4 border rounded-lg shadow-lg`}
             >
               <div className="flex items-center">
                 <div className="p-2 bg-red-200 rounded-lg">
