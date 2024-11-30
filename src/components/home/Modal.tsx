@@ -23,20 +23,22 @@ export const Modal: React.FC<ModalProps> = (props) => {
       onClick={handleOutsideClick}
       className="z-40 fixed w-screen h-screen top-0 flex justify-center items-center bg-black/70"
     >
-      <div className="relative flex flex-col justify-center items-center m-2 bg-white rounded-xl overflow-hidden">
+      <div className="relative max-w-[320px] sm:max-w-[400px] flex flex-col justify-center items-center m-2 bg-white rounded-xl overflow-hidden">
         <button
           onClick={onClick}
           className="absolute top-2 right-2 p-2 bg-white hover:bg-transparent active:scale-90 rounded-full transition-all"
         >
           <IoClose className="h-5 w-5" />
         </button>
-        <img
-          src={image}
-          alt={`${title}-image`}
-          height={400}
-          width={500}
-          className="max-w-[400px] object-cover"
-        />
+        <div className="w-full flex justify-center items-center">
+          <img
+            src={image}
+            alt={`${title}-image`}
+            height={400}
+            width={500}
+            className="w-full aspect-square sm:aspect-[7/8] object-cover"
+          />
+        </div>
         <div className="w-full p-5 pt-4 space-y-2">
           <h1 className="flex justify-start items-center gap-1.5 font-semibold text-xl text-blue-manadong">
             {title}
